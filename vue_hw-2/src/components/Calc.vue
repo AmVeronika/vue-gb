@@ -1,27 +1,27 @@
 <template>
 <div class="calc">
-   <input class="calc__input" v-model.number="operand1" disabled>
-   <input class="calc__input" v-model.number="operand2" disabled>
-   <div class="buttons-value">
+   <input class="calc__input" v-model.number="operand1" type="number">
+   <input class="calc__input" v-model.number="operand2" type="number">
+   <div >
+      <div class="buttons"> 
+         <button class="calc__button" @click="calculate(operator)" v-for="operator in operators" :key="operator">{{operator}}</button>
+      </div>
+      <div v-show="!error" class="calc__result">{{result}}</div>
+      <div v-show="error" class="calc__result">{{error}}</div>
+   </div>
+     <label class="calc__checkbox">
+      <input type="checkbox" id="checkbox" v-model="checked">
+      Скрыть/Показать кнопки
+   </label>
+      <div class="buttons-value" v-show="checked">
       <input type="radio" id="one" value="left" v-model="picked">
       <label for="one">Первое значение</label>
       <br>
       <input type="radio" id="two" value="right" v-model="picked">
       <label for="two">Второе значение</label>
    </div>
-   <div class="buttons-value">
+   <div class="buttons-value" v-show="checked">
       <button class="calc__button-v" @click="valueTransfer(btn)" v-for="btn in buttons" :key="btn">{{btn}}</button>
-   </div>
-   <label class="calc__checkbox">
-      <input type="checkbox" id="checkbox" v-model="checked">
-      Скрыть/Показать кнопки
-   </label>
-   <div v-show="checked">
-      <div class="buttons"> 
-         <button class="calc__button" @click="calculate(operator)" v-for="operator in operators" :key="operator">{{operator}}</button>
-      </div>
-      <div v-show="!error" class="calc__result">{{result}}</div>
-      <div v-show="error" class="calc__result">{{error}}</div>
    </div>
 </div>
 </template>
@@ -31,8 +31,9 @@ export default {
   name: 'Calc',
  data () {
     return {
-       operand1: 0,
-       operand2: 0,
+       operand1: '',
+       operand2: '',
+       chmok: [],
        result: '',
        error: '',
        operators: ['Сложение','Вычитание','Умножение','Деление','Возведение в степень', 'Целочисленное деление'],
@@ -46,7 +47,7 @@ export default {
        this.error = '';
      switch (operation) {
        case 'Сложение':
-         this.result = this.operand1 + this.operand2 
+         this.result = +this.operand1 + +this.operand2 
          break;
        case 'Вычитание':
          this.result = this.operand1 - this.operand2 
@@ -66,28 +67,29 @@ export default {
          this.result = this.operand1 ** this.operand2 
          break;
          case 'Целочисленное деление':
-        this.result = (this.operand1 - this.operand1 % this.operand2)/this.operand2
+         if (this.operand2 === 0) {
+         this.error = 'Делить на 0 нельзя!'}
+         else {this.result = (this.operand1 - this.operand1 % this.operand2)/this.operand2}
          break;
      }
     },
    valueTransfer(value) {
       this.result = ''
       if (value !== 'del') {
-      if (this.picked == 'right') {
-         this.operand2 = value   
-      } else if (this.picked == 'left')
-         this.operand1 = value   
+         if (this.picked == 'right') {
+           this.operand2 += value
+         } else if (this.picked == 'left')
+            this.operand1 += value   
       else {
          this.result = 'Вы не выбрали поле';
       }}
       if(value === 'del') {
          if (this.picked == 'right') {
-            this.operand2 = ''
+            this.operand2 = this.operand2.replace(/\d\b/, '')
          } else if (this.picked == 'left') {
-            this.operand1 = ''
+            this.operand1 = this.operand1.replace(/\d\b/, '')
          }
       }
-     
     }
  }
 }
@@ -138,5 +140,4 @@ export default {
     background: #35495e5e;
     color: #35495e
 }
-
 </style>
