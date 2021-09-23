@@ -21,7 +21,7 @@
 export default {
   name: "paymentsList",
   props: {
-    items: Array,
+    items: Function,
   },
   data() {
     return {};

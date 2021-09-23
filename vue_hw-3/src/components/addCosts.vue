@@ -9,13 +9,11 @@ export default {
   name: "addCosts",
   data() {
     return {
-      ok: true,
     };
   },
   methods: {
     openClose() {
-      let noOk = (this.ok = !this.ok);
-      this.$emit("openCloseInput", noOk);
+      this.$emit("openCloseInput");
     },
   },
 };
