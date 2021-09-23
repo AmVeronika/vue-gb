@@ -23,7 +23,7 @@ export default {
   methods: {
     clickSendData () {
       const { date, category, price } = this
-      this.$emit('MySendData', { date, category, price })
+      this.$emit('mySendData', { date, category, price })
     }
   },
 };

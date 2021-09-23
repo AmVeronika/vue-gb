@@ -1,14 +1,23 @@
 <template>
   <div>
-    <button class="add-costs">add new cost +</button>
+    <button class="add-costs" @click="openClose">add new cost +</button>
   </div>
 </template>
 
 <script>
 export default {
   name: "addCosts",
-  
-  methods: {},
+  data() {
+    return {
+      ok: true,
+    };
+  },
+  methods: {
+    openClose() {
+      let noOk = (this.ok = !this.ok);
+      this.$emit("openCloseInput", noOk);
+    },
+  },
 };
 </script>
 <style scoped>
