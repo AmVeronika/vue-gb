@@ -3,8 +3,8 @@
     <h1>My personal costs</h1>
     <addCosts @openCloseInput="btnClickInput"></addCosts>
     <dataInput @mySendData="dataAdded" v-if="bool"></dataInput>
-    <paymentsList :items="newsItems"></paymentsList>
-    <pages :items="paymentsList" @paginatedData="newsItems"></pages>
+    <paymentsList :items="autorend" :item="paymentsList" ></paymentsList>
+    <pages :items="paymentsList" :sizeItem="sizeItem" @paginatedData="newsItems"></pages>
   </div>
 </template>
 
@@ -24,7 +24,10 @@ export default {
   },
   data() {
     return {
-      bool: true,
+      bool: false,
+      sizeItem: 5,
+      start: 0,
+      end: 5,
       paymentsList: [
         {
           date: "2021-08-01",
@@ -151,15 +154,21 @@ export default {
   },
   methods: {
     dataAdded(data) {
-      this.paymentsList.push(data);
+      this.paymentsList.unshift(data);
     },
     btnClickInput() {
       this.bool = !this.bool;
     },
-    newsItems(start, end) {
-      return this.paymentsList.slice(start, end);
+    newsItems(key) {
+        this.start = key * this.sizeItem,
+        this.end = this.start + this.sizeItem;
     },
   },
+  computed: {
+     autorend() {
+        return this.paymentsList.slice(this.start, this.end);
+     }
+  }
 };
 </script>
 <style scoped>

@@ -8,7 +8,7 @@
         <li class="item item-title">Value</li>
       </ul>
       <ul class="payments-list-punkt" v-for="(i, ind) in items" :key="ind">
-        <li class="item item-value">{{ ind + 1 }}</li>
+        <li class="item item-value">{{ ind +1 }}</li>
         <li class="item item-value">{{ i.date }}</li>
         <li class="item item-value">{{ i.category }}</li>
         <li class="item item-value">{{ i.price }} rub</li>
@@ -21,10 +21,7 @@
 export default {
   name: "paymentsList",
   props: {
-    items: Function,
-  },
-  data() {
-    return {};
+    items: Array,
   },
 };
 </script>
@@ -32,6 +29,7 @@ export default {
 <style scoped>
 .payments-ul {
   padding-left: 0px;
+  height: 190px;
 }
 .payments-list-title,
 .payments-list-punkt {

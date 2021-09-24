@@ -16,18 +16,12 @@ export default {
   name: "pages",
   props: {
     items: Array,
-  },
-  data() {
-    return {
-      pageNumber: 0,
-      sizeItem: 3,
-    };
+    sizeItem: Number,
   },
   methods: {
     paginatedData(key) {
-      const start = key * this.sizeItem,
-        end = start + this.sizeItem;
-      return this.$emit("paginatedData", start, end);
+      return this.$emit("paginatedData", key);
+      // this.paymentsList.slice(start, end);
     },
   },
   computed: {
