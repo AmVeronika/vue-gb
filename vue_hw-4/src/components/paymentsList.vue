@@ -7,7 +7,7 @@
         <li class="item item-title">Category</li>
         <li class="item item-title">Value</li>
       </ul>
-      <ul class="payments-list-punkt" v-for="(i, ind) in items" :key="ind">
+      <ul class="payments-list-punkt" v-for="(i, ind) in getPaymentsValue" :key="ind">
         <li class="item item-value">{{ ind +1 }}</li>
         <li class="item item-value">{{ i.date }}</li>
         <li class="item item-value">{{ i.category }}</li>
@@ -18,11 +18,12 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "paymentsList",
-  props: {
-    items: Array,
-  },
+  computed: {
+     ...mapGetters(['getPaymentsValue'])
+  }
 };
 </script>
 

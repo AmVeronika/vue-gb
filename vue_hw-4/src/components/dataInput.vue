@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 export default {
   name: "dataInput",
   data() {
@@ -20,10 +21,17 @@ export default {
   props: {
     items: Array
   },
+   computed:{
+     
+  },
   methods: {
+   ...mapMutations(["addDataToPaymentsList"]),
     clickSendData () {
-      const { date, category, price } = this
-      this.$emit('mySendData', { date, category, price })
+     let info =  {
+        date: this.date, 
+        category: this.category, 
+        price: this.price }
+      this.addDataToPaymentsList(info)
     }
   },
 };
