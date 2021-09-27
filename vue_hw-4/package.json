@@ -1,5 +1,5 @@
 {
-  "name": "vue_hw-1",
+  "name": "vue_hw-3",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,7 +9,9 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
-    "vue": "^2.6.11"
+    "moment": "^2.29.1",
+    "vue": "^2.6.11",
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
