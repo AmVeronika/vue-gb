@@ -12,21 +12,23 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "pages",
   props: {
-    items: Array,
     sizeItem: Number,
   },
   methods: {
     paginatedData(key) {
-      return this.$emit("paginatedData", key);
+      return this.$emit("getPaymentsValue", key);
       // this.paymentsList.slice(start, end);
     },
   },
   computed: {
+    ...mapGetters(["getPaymentsValue"]),
     pageCount() {
-      let l = this.items.length,
+      let l = this.getPaymentsValue.length,
         s = this.sizeItem;
       return Math.ceil(l / s);
     },

@@ -1,14 +1,16 @@
 <template>
   <div class="inputs">
-    <input v-model="date" class="data-input" placeholder="date" type="date" required/>
-    <input v-model="category" class="data-input" placeholder="category" type="text" required />
-    <input v-model.number="price" class="data-input" placeholder="price" type="number" required />
+    <input v-model="date" class="data-input" placeholder="date" type="date" required />
+    <select v-model="category" class="data-input" name="category" id="" required >
+      <option v-for="(i, ind) in backCatalog" :key="ind" value="">{{ i }}</option>
+    </select>
+    <input v-model.number="price" class="data-input" placeholder="price" type="number" value="100" required />
     <button @click="clickSendData" class="data-input-but">send</button>
   </div>
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations, mapGetters, mapActions } from "vuex";
 export default {
   name: "dataInput",
   data() {
@@ -18,21 +20,27 @@ export default {
       price: null,
     };
   },
-  props: {
-    items: Array
-  },
-   computed:{
-     
+  computed: {
+    ...mapGetters(["getCategoryList"]),
+     backCatalog(){
+       return this.getCategoryList
+    }
   },
   methods: {
-   ...mapMutations(["addDataToPaymentsList"]),
-    clickSendData () {
-     let info =  {
-        date: this.date, 
-        category: this.category, 
-        price: this.price }
-      this.addDataToPaymentsList(info)
-    }
+    ...mapMutations(["addDataToPaymentsList"]),
+    ...mapActions(["fetchCategory"]),
+    clickSendData() {
+      let info = {
+        date: this.date,
+        category: this.category,
+        price: this.price,
+      };
+      this.addDataToPaymentsList(info);
+    },
+   
+  },
+  mounted() {
+    this.fetchCategory();
   },
 };
 </script>

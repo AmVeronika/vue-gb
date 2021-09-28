@@ -4,7 +4,7 @@
     <addCosts @openCloseInput="btnClickInput"></addCosts>
     <dataInput v-if="bool"></dataInput>
     <paymentsList></paymentsList>
-    <pages :items="paymentsLists" :sizeItem="sizeItem" @paginatedData="newsItems"
+    <pages :sizeItem="sizeItem" @paginatedData="newsItems"
     ></pages>
   </div>
 </template>
@@ -30,12 +30,11 @@ export default {
       sizeItem: 5,
       start: 0,
       end: 5,
-      paymentsLists: []
     };
   },
   methods: {
     ...mapMutations(["setPaymentsListData"]),
-     ...mapActions(['fetchData']),
+    ...mapActions(['fetchData']),
     btnClickInput() {
       this.bool = !this.bool;
     },
