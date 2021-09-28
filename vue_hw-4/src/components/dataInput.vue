@@ -1,8 +1,8 @@
 <template>
   <div class="inputs">
     <input v-model="date" class="data-input" placeholder="date" type="date" required />
-    <select v-model="category" class="data-input" name="category" id="" required >
-      <option v-for="(i, ind) in backCatalog" :key="ind" value="">{{ i }}</option>
+    <select v-model="selected" class="data-input" name="category" required >
+      <option :value="opt" v-for="(opt, ind) in backCatalog" :key="ind">{{ opt }} </option>
     </select>
     <input v-model.number="price" class="data-input" placeholder="price" type="number" value="100" required />
     <button @click="clickSendData" class="data-input-but">send</button>
@@ -18,29 +18,30 @@ export default {
       date: "",
       category: "",
       price: null,
+      selected: 'pharmacy',
     };
   },
   computed: {
     ...mapGetters(["getCategoryList"]),
-     backCatalog(){
-       return this.getCategoryList
+    backCatalog(){
+      return this.getCategoryList // получение списика категории в селект
     }
   },
   methods: {
     ...mapMutations(["addDataToPaymentsList"]),
     ...mapActions(["fetchCategory"]),
-    clickSendData() {
+    clickSendData() { //передача формы данных 
       let info = {
         date: this.date,
-        category: this.category,
+        category: this.selected,
         price: this.price,
       };
-      this.addDataToPaymentsList(info);
+      this.addDataToPaymentsList(info); // загрузка в массив
     },
    
   },
   mounted() {
-    this.fetchCategory();
+    this.fetchCategory(); // запрос на получение списика категории в селект
   },
 };
 </script>

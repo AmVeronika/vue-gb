@@ -12,24 +12,22 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapMutations, mapGetters } from "vuex";
 
 export default {
   name: "pages",
-  props: {
-    sizeItem: Number,
-  },
   methods: {
+     ...mapMutations(["setPaginatedData"]),
     paginatedData(key) {
-      return this.$emit("getPaymentsValue", key);
+      this.setPaginatedData(key);
       // this.paymentsList.slice(start, end);
     },
   },
   computed: {
-    ...mapGetters(["getPaymentsValue"]),
+    ...mapGetters(["getPaymentsValue", "getSizeItem"]),
     pageCount() {
       let l = this.getPaymentsValue.length,
-        s = this.sizeItem;
+          s = this.getSizeItem;
       return Math.ceil(l / s);
     },
   },

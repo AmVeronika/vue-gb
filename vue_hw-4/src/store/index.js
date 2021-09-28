@@ -7,6 +7,9 @@ export default new Vuex.Store({
    state: {
       paymentsLists: [],
       categoryList: [],
+      sizeItem: 5,
+      start: 0,
+      end: 5
    },
    mutations: {
       setPaymentsListData(state, payload) {
@@ -16,12 +19,26 @@ export default new Vuex.Store({
          state.paymentsLists.unshift(payload)
       },
       setCategoryList(state, payload) {
+         if (!Array.isArray(payload)) {
+            payload = [payload]
+         }
          state.categoryList.push(...payload)
-      }
-   },
+      },
+      setNewPaymentsListData(state) {
+         state.paymentsLists.slice(state.start, state.end)
+      },
+      setPaginatedData(state, key) {
+         // this.$emit("getPaymentsValue", key);
+         // this.paymentsList.slice(start, end); 
+         state.start = key * state.sizeItem,
+         state.end = state.start + state.sizeItem
+         
+   }},
    getters: {
       getPaymentsValue: state => state.paymentsLists,
       getCategoryList: state => state.categoryList,
+      getSizeItem: state => state.sizeItem,
+
    },
    actions: {
       fetchData({ commit }) {
