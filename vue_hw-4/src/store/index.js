@@ -7,46 +7,41 @@ export default new Vuex.Store({
    state: {
       paymentsLists: [],
       categoryList: [],
-      sizeItem: 3,
-      start: 0,
-      end: 5,
-      infoPage: ''
+      infoPage: []
    },
    mutations: {
       setPaymentsListData(state, payload) {
-         if (!Array.isArray(payload)) {
-            state.paymentsLists = [payload]
-         } else state.paymentsLists = payload
-      },
-      addDataToPaymentsList(state, payload) {
-         state.paymentsLists.unshift(payload)
+         state.paymentsLists = payload
       },
       setCategoryList(state, payload) {
          if (!Array.isArray(payload)) {
             state.categoryList.push(...[payload])
          } else state.categoryList.push(...payload)
       },
-      setNewPaymentsListData(state) {
-         state.paymentsLists.slice(state.start, state.end)
+      setInfoPage(state, payload) {
+         state.infoPage = payload
       },
-      setPaginatedData(state, key) {
-         // this.$emit("getPaymentsValue", key);
-         // this.paymentsList.slice(start, end); 
-         state.start = key * state.sizeItem,
-            state.end = state.start + state.sizeItem
+      addInfoPage(state, key) {
+         // console.log(key);
+         let a = `page${Object.keys(state.paymentsLists).length + 1}`;
+         let b = `page${Object.keys(state.paymentsLists).length}`;
+
+         console.log(b + '= b, a = ' + a);
+         if (state.paymentsLists[b].length == 3) {
+            state.paymentsLists[a] = [key];
+            state.infoPage = key
+         } else if (state.paymentsLists[b].length < 3) {
+            state.paymentsLists[b].push(key);
+            state.infoPage.push(key)
+            console.log(state.paymentsLists);
+         } else console.log('иначе');
+         // state.infoPage.push(...payload)
       },
-      setInfoPage(state, key) {
-         state.infoPage = '',
-         state.infoPage = key
-      }
    },
    getters: {
       getPaymentsValue: state => state.paymentsLists,
       getCategoryList: state => state.categoryList,
-      getSizeItem: state => state.sizeItem,
       getInfoPage: state => state.infoPage
-
-
    },
    actions: {
       fetchData({ commit }) {
@@ -62,6 +57,14 @@ export default new Vuex.Store({
             .then(response => response.json())
             .then(res => {
                commit('setCategoryList', res)
+            })
+      },
+      fetchInfoPage({ commit }, key) {
+         return fetch('https://raw.githubusercontent.com/AmVeronika/JSON-EBT/master/vueGB.json')
+            .then(response => response.json())
+            .then(res => {
+               // запускаем изменение состояния через commit
+               commit('setInfoPage', res[key])
             })
       }
    }

@@ -9,29 +9,30 @@
       </ul>
       <ul
         class="payments-list-punkt"
-        v-for="(i, ind) in getPaymentsValue"
+        v-for="(i, ind) in getInfoPage"
         :key="ind"
       >
-        <li class="item item-value">{{ ind + 1 }}</li>
+        <li class="item item-value">{{ i.id }}</li>
         <li class="item item-value">{{ i.date }}</li>
         <li class="item item-value">{{ i.category }}</li>
-        <li class="item item-value">{{ i.price }} rub</li>
+        <li class="item item-value">{{ i.value }}</li>
       </ul>
     </ul>
-    <p v-for="(m, min) in getPaymentsValue[0]" :key="min">{{ min }}</p>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "paymentsList",
-  mounted: {},
   computed: {
-    ...mapGetters(["getPaymentsValue"]),
-    log() {
-      return console.log(this.getPaymentsValue);
-    },
+    ...mapGetters(["getInfoPage", "getPaymentsValue"]),
+  },
+  methods: {
+    ...mapActions(["fetchInfoPage"]),
+  },
+  beforeMount() {
+    this.fetchInfoPage("page3");
   },
 };
 </script>

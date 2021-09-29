@@ -28,17 +28,18 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["addDataToPaymentsList"]),
+    ...mapMutations(["addDataToPaymentsList", "addInfoPage"]),
     ...mapActions(["fetchCategory"]),
     clickSendData() { //передача формы данных 
       let info = {
+        id: 1,
         date: this.date,
         category: this.selected,
-        price: this.price,
+        value: this.price,
       };
-      this.addDataToPaymentsList(info); // загрузка в массив
+      this.addInfoPage(info); // загрузка в массив
     },
-   
+    
   },
   mounted() {
     this.fetchCategory(); // запрос на получение списика категории в селект
