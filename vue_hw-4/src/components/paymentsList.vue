@@ -18,6 +18,7 @@
         <li class="item item-value">{{ i.price }} rub</li>
       </ul>
     </ul>
+    <p v-for="(m, min) in getPaymentsValue[0]" :key="min">{{ min }}</p>
   </div>
 </template>
 
@@ -25,8 +26,12 @@
 import { mapGetters } from "vuex";
 export default {
   name: "paymentsList",
+  mounted: {},
   computed: {
     ...mapGetters(["getPaymentsValue"]),
+    log() {
+      return console.log(this.getPaymentsValue);
+    },
   },
 };
 </script>
@@ -34,7 +39,7 @@ export default {
 <style scoped>
 .payments-ul {
   padding-left: 0px;
-  height: 190px;
+  height: min-content;
 }
 .payments-list-title,
 .payments-list-punkt {
