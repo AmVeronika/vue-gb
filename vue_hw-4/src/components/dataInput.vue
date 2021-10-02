@@ -32,7 +32,7 @@ export default {
     ...mapActions(["fetchCategory"]),
     clickSendData() { //передача формы данных 
       let info = {
-        id: 1,
+        id: 0,
         date: this.date,
         category: this.selected,
         value: this.price,

@@ -13,7 +13,7 @@ import addCosts from "./components/addCosts.vue";
 import dataInput from "./components/dataInput.vue";
 import paymentsList from "./components/paymentsList.vue";
 import pages from "./components/pages.vue";
-import { mapMutations, mapActions } from "vuex";
+import {  mapActions } from "vuex";
 
 export default {
   name: "App",
@@ -29,14 +29,13 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["setPaymentsListData"]),
     ...mapActions(["fetchData"]),
     btnClickInput() {
       this.bool = !this.bool;
     },
   },
-  mounted() {
-    this.fetchData();
+  created() {
+    this.fetchData("page3");
     
   },
 };

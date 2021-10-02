@@ -1,6 +1,6 @@
 <template>
   <div class="btn-pages">
-    <button class="btn-page" @click="setInfoPage(min)" v-for="(m, min) in getPaymentsValue" :key="min"> {{ min }}</button> 
+    <button class="btn-page" @click="setInfoPage(getPaymentsValue[min])" v-for="(m, min) in getPaymentsValue" :key="min"> {{ min }}</button> 
   </div>
 </template>
 
