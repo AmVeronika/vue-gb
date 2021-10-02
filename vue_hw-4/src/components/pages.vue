@@ -1,21 +1,20 @@
 <template>
   <div class="btn-pages">
-    <button class="btn-page" @click="setInfoPage(getPaymentsValue[min])"  v-for="(m, min) in getPaymentsValue" :key="min"> {{ min }}</button> 
+    <button class="btn-page" @click="setInfoPage(min)" v-for="(m, min) in getPaymentsValue" :key="min"> {{ min }}</button> 
   </div>
 </template>
 
 <script>
-import { mapMutations, mapGetters, mapActions } from "vuex";
+import { mapMutations, mapGetters } from "vuex";
 
 export default {
   name: "pages",
   methods: {
-    ...mapMutations(["setPaginatedData", "setInfoPage"]),
-    ...mapActions(["fetchInfoPage"]),
+    ...mapMutations(["setInfoPage"]),
   }, 
   computed: {
-    ...mapGetters(["getPaymentsValue", "getInfoPage"])
-  },
+    ...mapGetters(["getPaymentsValue"]),
+  }
 };
 </script>
 <style scoped>

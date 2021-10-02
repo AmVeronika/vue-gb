@@ -11,15 +11,16 @@ export default new Vuex.Store({
    },
    mutations: {
       setPaymentsListData(state, payload) {
-         state.paymentsLists = payload
+         state.paymentsLists = payload;
       },
       setCategoryList(state, payload) {
          if (!Array.isArray(payload)) {
             state.categoryList.push(...[payload])
          } else state.categoryList.push(...payload)
       },
-      setInfoPage(state, payload) {
-         state.infoPage = payload
+      setInfoPage(state, key) {
+         console.log(state.paymentsLists);
+         state.infoPage = state.paymentsLists[key]
       },
       addInfoPage(state, key) {
          // console.log(key);
@@ -41,30 +42,20 @@ export default new Vuex.Store({
    getters: {
       getPaymentsValue: state => state.paymentsLists,
       getCategoryList: state => state.categoryList,
-      getInfoPage: state => state.infoPage
+      getInfoPage: state => state.infoPage,
    },
    actions: {
-      fetchData({ commit }) {
-         return fetch('https://raw.githubusercontent.com/AmVeronika/JSON-EBT/master/vueGB.json')
-            .then(response => response.json())
-            .then(res => {
-               // запускаем изменение состояния через commit
-               commit('setPaymentsListData', res)
-            })
+      async fetchData({ commit }) {
+         const response = await fetch('https://raw.githubusercontent.com/AmVeronika/JSON-EBT/master/vueGB.json')
+         const res = await response.json()
+         // запускаем изменение состояния через commit
+         commit('setPaymentsListData', res)
       },
-      fetchCategory({ commit }) {
-         return fetch('https://raw.githubusercontent.com/AmVeronika/JSON-EBT/master/vueGB2.json')
+      fetchCategory({ dispatch, commit }) {
+         return dispatch('https://raw.githubusercontent.com/AmVeronika/JSON-EBT/master/vueGB2.json')
             .then(response => response.json())
             .then(res => {
                commit('setCategoryList', res)
-            })
-      },
-      fetchInfoPage({ commit }, key) {
-         return fetch('https://raw.githubusercontent.com/AmVeronika/JSON-EBT/master/vueGB.json')
-            .then(response => response.json())
-            .then(res => {
-               // запускаем изменение состояния через commit
-               commit('setInfoPage', res[key])
             })
       }
    }

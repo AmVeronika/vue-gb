@@ -22,18 +22,18 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "paymentsList",
   computed: {
-    ...mapGetters(["getInfoPage", "getPaymentsValue"]),
+    ...mapGetters(["getInfoPage"]),
   },
   methods: {
-    ...mapActions(["fetchInfoPage"]),
+ ...mapMutations(["setInfoPage"])
   },
-  beforeMount() {
-    this.fetchInfoPage("page3");
-  },
+  mounted() {
+     this.setInfoPage("page1")
+  }
 };
 </script>
 
