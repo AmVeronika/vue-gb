@@ -7,7 +7,8 @@ export default new Vuex.Store({
    state: {
       paymentsLists: [],//массив массивов с объектами
       categoryList: [],//Массив с категориями
-      currentPage: 1 //Текущая страница
+      currentPage: 1, //Текущая страница
+      lob: 1,
    },
    mutations: {
       setPaymentsListData(state, payload) {
@@ -23,25 +24,24 @@ export default new Vuex.Store({
          } else state.categoryList.push(...payload)
       },
       addInfoPage(state, item) {
-         let lastPagewithItems = state.paymentsLists[state.paymentsLists.length - 1]
-         let quontItemsOnTheLastPage = lastPagewithItems.length
-         if (quontItemsOnTheLastPage < 3) { // Если меньше 3 элементов отображается на странице
+         let lastPagewithItems = state.paymentsLists[state.paymentsLists.length - 1];
+         let quontItemsOnTheLastPage = lastPagewithItems.length;
+         if(item) {
+            if (quontItemsOnTheLastPage < 3) { // Если меньше 3 элементов отображается на странице
             lastPagewithItems.push(item)
          } else if (quontItemsOnTheLastPage == 3) {
-            console.log(state.paymentsLists.length+1);
-            state.currentPage =  ++state.currentPage
             state.paymentsLists.push([item]);
+            state.currentPage = state.paymentsLists.length
+         } 
          }
+        
       },
       setCurrentPage(state, page) { // Передаём индес state.paymentsList + 1
          state.currentPage = +page
       }
    },
    getters: {
-      getPaymentsValue: state => state.paymentsLists,
-      getCategoryList: state => state.categoryList,
       getInfoPage: state => state.paymentsLists[state.currentPage - 1], // Передача страницы для отображения
-      getCurrentPageage: state => state.currentPage, // крайняя страница
    },
    actions: {
       async fetchData({ commit }) {

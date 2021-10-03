@@ -2,7 +2,7 @@
   <div class="inputs">
     <input v-model="date" class="data-input" placeholder="date" type="date" required />
     <select v-model="selected" class="data-input" name="category" required >
-      <option :value="opt" v-for="(opt, ind) in backCatalog" :key="ind">{{ opt }} </option>
+      <option :value="opt" v-for="(opt, ind) in categoryList" :key="ind">{{ opt }} </option>
     </select>
     <input v-model.number="price" class="data-input" placeholder="price" type="number" value="100" required />
     <button @click="clickSendData" class="data-input-but">send</button>
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters, mapActions } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 export default {
   name: "dataInput",
   data() {
@@ -22,16 +22,13 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getCategoryList", "getPaymentsValue", "getCurrentPage"]),
-    backCatalog(){
-      return this.getCategoryList // получение списика категории в селект
-    }
+   ...mapState([ "paymentsLists","categoryList"])
   },
   methods: {
     ...mapMutations(["addDataToPaymentsList", "addInfoPage"]),
-    ...mapActions(["fetchCategory"]),
+    ...mapActions([ "fetchCategory"]),
     clickSendData() { //передача формы данных 
-    let lastPageCont = this.getPaymentsValue[this.getPaymentsValue.length -1];
+    let lastPageCont = this.paymentsLists[this.paymentsLists.length -1];
     let lastItemId = lastPageCont[lastPageCont.length-1].id // id предыдущего значения
       let info = {
         id: lastItemId +1, 

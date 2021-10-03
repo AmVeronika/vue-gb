@@ -12,7 +12,7 @@
         v-for="(i, ind) in getInfoPage"
         :key="ind"
       >
-        <li class="item item-value">{{ i.id }}</li>
+        <li class="item item-value">{{ currentPage * 3 - 2 + ind }}</li>
         <li class="item item-value">{{ i.date }}</li>
         <li class="item item-value">{{ i.category }}</li>
         <li class="item item-value">{{ i.value }}</li>
@@ -22,26 +22,23 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapState } from "vuex";
 export default {
   name: "paymentsList",
   computed: {
-    ...mapGetters(["getInfoPage", "getPaymentsValue"]),
-    gg() {
-      return this.getPaymentsValue;
-    },
+    ...mapGetters(["getInfoPage"]),
+    ...mapState(["currentPage"]),
   },
   methods: {
     ...mapActions(["fetchData"]),
   },
-  created() {},
 };
 </script>
 
 <style scoped>
 .payments-ul {
   padding-left: 0px;
-  height: min-content;
+  height: 150px;
 }
 .payments-list-title,
 .payments-list-punkt {

@@ -1,20 +1,33 @@
 <template>
   <div class="btn-pages">
-    <button class="btn-page" @click="setCurrentPage(page +1)"  v-for="(m, page) in getPaymentsValue" :key="page"> 
-       {{ page +1 }}</button> 
+    <button
+      class="btn-page" :class="[currentPage == page + 1 ? 'btn-page-active' : '' ]"
+      @click="setCurrentPage(page + 1)"
+      v-for="(m, page) in paymentsLists"
+      :key="page"
+    >
+      {{ page + 1 }}
+    </button>
   </div>
 </template>
 
 <script>
-import { mapMutations, mapGetters } from "vuex";
+import { mapMutations, mapState } from "vuex";
 
 export default {
   name: "pages",
   methods: {
-    ...mapMutations(["setCurrentPage"]),
+    ...mapMutations(["setCurrentPage"]), 
+    aa(page) {
+       console.log(page);
+       if (page == this.currentPage) {
+          console.log(this.currentPage);
+
+       }
+    }
   }, 
   computed: {
-    ...mapGetters(["getPaymentsValue"]),
+    ...mapState([ "paymentsLists", "currentPage"])
   }
 };
 </script>
@@ -28,5 +41,9 @@ export default {
 .btn-page {
   padding: 10px;
   width: 70px;
+}
+.btn-page-active {
+  background: rgb(68, 28, 28);
+  color: azure;
 }
 </style>
