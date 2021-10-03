@@ -5,52 +5,51 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
    state: {
-      paymentsLists: [],
-      categoryList: [],
-      infoPage: [],
-      fff: []
+      paymentsLists: [],//массив массивов с объектами
+      categoryList: [],//Массив с категориями
+      currentPage: 1 //Текущая страница
    },
    mutations: {
       setPaymentsListData(state, payload) {
-         state.paymentsLists = payload;
+         const pagesName = Object.keys(payload).sort(); // ["Page1", "page2, "Page3"]
+         state.paymentsLists = pagesName.map((pageName) => {
+            return payload[pageName]
+         });
+         state.currentPage = Object.keys(payload).length;
       },
       setCategoryList(state, payload) {
          if (!Array.isArray(payload)) {
             state.categoryList.push(...[payload])
          } else state.categoryList.push(...payload)
       },
-      setInfoPage(state, key) {
-         state.infoPage = key;
-      },
-      addInfoPage(state, key) {
-         let thisPage = `page${Object.keys(state.paymentsLists).length}`; // данная страница
-         key.id = (state.paymentsLists[thisPage][state.paymentsLists[thisPage].length - 1].id + 1)// id на одну единицу больше предыдущего
-         console.log(state.paymentsLists);
-         if (state.paymentsLists[thisPage]) {
-            let thisPage = `page${Object.keys(state.paymentsLists).length}`; // данная страница
-            let nextPage = `page${Object.keys(state.paymentsLists).length + 1}`; // Следующая страница
-            key.id = (state.paymentsLists[thisPage][state.paymentsLists[thisPage].length - 1].id + 1)// id на одну единицу больше предыдущего
-            if (state.paymentsLists[thisPage].length < 3) {
-               state.paymentsLists[thisPage].push(key);
-            } else if (state.paymentsLists[thisPage].length == 3) {
-               state.infoPage = [key]
-               state.paymentsLists[nextPage] = [key];
-            }
+      addInfoPage(state, item) {
+         let lastPagewithItems = state.paymentsLists[state.paymentsLists.length - 1]
+         let quontItemsOnTheLastPage = lastPagewithItems.length
+         if (quontItemsOnTheLastPage < 3) { // Если меньше 3 элементов отображается на странице
+            lastPagewithItems.push(item)
+         } else if (quontItemsOnTheLastPage == 3) {
+            console.log(state.paymentsLists.length+1);
+            state.currentPage =  ++state.currentPage
+            state.paymentsLists.push([item]);
          }
       },
+      setCurrentPage(state, page) { // Передаём индес state.paymentsList + 1
+         state.currentPage = +page
+      }
    },
    getters: {
       getPaymentsValue: state => state.paymentsLists,
       getCategoryList: state => state.categoryList,
-      getInfoPage: state => state.infoPage,
+      getInfoPage: state => state.paymentsLists[state.currentPage - 1], // Передача страницы для отображения
+      getCurrentPageage: state => state.currentPage, // крайняя страница
    },
    actions: {
-      async fetchData({ commit }, key) {
+      async fetchData({ commit }) {
          const response = await fetch('https://raw.githubusercontent.com/AmVeronika/JSON-EBT/master/vueGB.json')
          const res = await response.json()
          // запускаем изменение состояния через commit
-         commit('setInfoPage', res[key]);
-         commit('setPaymentsListData', res)
+         commit('setPaymentsListData', res);
+         commit('setCurrentPage', Object.keys(res).length)
 
       },
       fetchCategory({ commit }) {

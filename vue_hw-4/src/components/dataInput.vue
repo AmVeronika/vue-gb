@@ -22,7 +22,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getCategoryList"]),
+    ...mapGetters(["getCategoryList", "getPaymentsValue", "getCurrentPage"]),
     backCatalog(){
       return this.getCategoryList // получение списика категории в селект
     }
@@ -31,8 +31,10 @@ export default {
     ...mapMutations(["addDataToPaymentsList", "addInfoPage"]),
     ...mapActions(["fetchCategory"]),
     clickSendData() { //передача формы данных 
+    let lastPageCont = this.getPaymentsValue[this.getPaymentsValue.length -1];
+    let lastItemId = lastPageCont[lastPageCont.length-1].id // id предыдущего значения
       let info = {
-        id: 0,
+        id: lastItemId +1, 
         date: this.date,
         category: this.selected,
         value: this.price,

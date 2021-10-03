@@ -1,6 +1,7 @@
 <template>
   <div class="btn-pages">
-    <button class="btn-page" @click="setInfoPage(getPaymentsValue[min])" v-for="(m, min) in getPaymentsValue" :key="min"> {{ min }}</button> 
+    <button class="btn-page" @click="setCurrentPage(page +1)"  v-for="(m, page) in getPaymentsValue" :key="page"> 
+       {{ page +1 }}</button> 
   </div>
 </template>
 
@@ -10,7 +11,7 @@ import { mapMutations, mapGetters } from "vuex";
 export default {
   name: "pages",
   methods: {
-    ...mapMutations(["setInfoPage"]),
+    ...mapMutations(["setCurrentPage"]),
   }, 
   computed: {
     ...mapGetters(["getPaymentsValue"]),

@@ -35,7 +35,7 @@ export default {
     },
   },
   created() {
-    this.fetchData("page3");
+    this.fetchData();
     
   },
 };
