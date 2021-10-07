@@ -12,7 +12,7 @@ export default new Vuex.Store({
    },
    mutations: {
       setPaymentsListData(state, payload) {
-         const pagesName = Object.keys(payload).sort(); // ["Page1", "page2, "Page3"]
+         const pagesName = Object.keys(payload).sort(); // ["Page1", "page2", "Page3"]
          state.paymentsLists = pagesName.map((pageName) => {
             return payload[pageName]
          });
