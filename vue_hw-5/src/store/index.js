@@ -8,7 +8,6 @@ export default new Vuex.Store({
       paymentsLists: [],//массив массивов с объектами
       categoryList: [],//Массив с категориями
       currentPage: 1, //Текущая страница
-      lob: 1,
    },
    mutations: {
       setPaymentsListData(state, payload) {
@@ -26,22 +25,18 @@ export default new Vuex.Store({
       addInfoPage(state, item) {
          let lastPagewithItems = state.paymentsLists[state.paymentsLists.length - 1];
          let quontItemsOnTheLastPage = lastPagewithItems.length;
-         if(item) {
+         if (item) {
             if (quontItemsOnTheLastPage < 3) { // Если меньше 3 элементов отображается на странице
-            lastPagewithItems.push(item)
-         } else if (quontItemsOnTheLastPage == 3) {
-            state.paymentsLists.push([item]);
-            state.currentPage = state.paymentsLists.length
-         } 
+               lastPagewithItems.push(item)
+            } else if (quontItemsOnTheLastPage == 3) {
+               state.paymentsLists.push([item]);
+               state.currentPage = state.paymentsLists.length
+            }
          }
-        
-      },
-      setCurrentPage(state, page) { // Передаём индес state.paymentsList + 1
-         state.currentPage = +page
       }
    },
    getters: {
-      getInfoPage: state => state.paymentsLists[state.currentPage - 1], // Передача страницы для отображения
+      getInfoPage: state => state.paymentsLists, // Передача страницы для отображения
    },
    actions: {
       async fetchData({ commit }) {
@@ -49,8 +44,6 @@ export default new Vuex.Store({
          const res = await response.json()
          // запускаем изменение состояния через commit
          commit('setPaymentsListData', res);
-         commit('setCurrentPage', Object.keys(res).length)
-
       },
       fetchCategory({ commit }) {
          return fetch('https://raw.githubusercontent.com/AmVeronika/JSON-EBT/master/vueGB2.json')

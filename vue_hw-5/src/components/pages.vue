@@ -1,34 +1,32 @@
 <template>
   <div class="btn-pages">
-    <button
-      class="btn-page" :class="[currentPage == page + 1 ? 'btn-page-active' : '' ]"
-      @click="setCurrentPage(page + 1)"
+    <router-link
+      :to="'/dashboard/' + (page + 1)"
+      class="btn-page"
+      :class="[activePage == page + 1 ? 'btn-page-active' : '']"
       v-for="(m, page) in paymentsLists"
       :key="page"
     >
       {{ page + 1 }}
-    </button>
+    </router-link>
   </div>
 </template>
 
 <script>
-import { mapMutations, mapState } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   name: "pages",
-  methods: {
-    ...mapMutations(["setCurrentPage"]), 
-    aa(page) {
-       console.log(page);
-       if (page == this.currentPage) {
-          console.log(this.currentPage);
-
-       }
-    }
-  }, 
+  methods: {},
   computed: {
-    ...mapState([ "paymentsLists", "currentPage"])
-  }
+    ...mapState(["paymentsLists"]),
+    activePage() {
+      return this.$route.params.page;
+    },
+  },
+  created() {
+     this.$route.params.page = this.paymentsLists.length
+  },
 };
 </script>
 <style scoped>
@@ -37,6 +35,7 @@ export default {
   display: flex;
   justify-content: space-between;
   margin: 0 auto;
+  text-align: center;
 }
 .btn-page {
   padding: 10px;

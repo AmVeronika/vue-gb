@@ -9,10 +9,10 @@
       </ul>
       <ul
         class="payments-list-punkt"
-        v-for="(i, ind) in getInfoPage"
+        v-for="(i, ind) in getCurrData"
         :key="ind"
       >
-        <li class="item item-value">{{ currentPage * 3 - 2 + ind }}</li>
+        <li class="item item-value">{{ currPage * 3 - 2 + ind }}</li>
         <li class="item item-value">{{ i.date }}</li>
         <li class="item item-value">{{ i.category }}</li>
         <li class="item item-value">{{ i.value }}</li>
@@ -22,16 +22,27 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapState } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "paymentsList",
   computed: {
     ...mapGetters(["getInfoPage"]),
-    ...mapState(["currentPage"]),
+    currPage() {
+      return this.$route.params.page;
+    },
+    getCurrData() {
+      return this.getInfoPage[this.currPage - 1];
+    },
   },
   methods: {
     ...mapActions(["fetchData"]),
   },
+//   mounted() {
+//      if (){
+
+//      }
+//     this.$router.push({ name: "pagehome" }).catch(() => {}); //.catch(() => {}) мы обработали ошибку, пожалуйста, не печатайте ошибку в инструментах разработчика.
+//   },
 };
 </script>
 

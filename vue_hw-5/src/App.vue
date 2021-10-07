@@ -13,14 +13,9 @@
 
 <script>
 export default {
-  name: "App",
-  computed: {
-    username() {
-      // Мы скоро разберём что такое `params`
-      return this.$route.params.username;
-    },
-  },
+  name: "App"
 };
+
 </script>
 <style scoped>
 #app {
@@ -41,7 +36,7 @@ export default {
   cursor: grabbing;
 }
 .links {
-   display: flex;
-   justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 </style>

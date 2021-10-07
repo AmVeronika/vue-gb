@@ -24,7 +24,7 @@ export default {
   data() {
     return {
       bool: false,
-    };
+    }
   },
   methods: {
     ...mapActions(["fetchData"]),
