@@ -1,4 +1,4 @@
-<template>
+fetchProducts(url, productsWrap)<template>
    <div>
      This page does not exist, or it was removed.
    </div>

@@ -24,7 +24,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 export default {
-  name: "paymentsList",
+  name: "Discount",
   computed: {
     ...mapGetters(["getInfoPage"]),
     currPage() {
@@ -37,12 +37,6 @@ export default {
   methods: {
     ...mapActions(["fetchData"]),
   },
-//   mounted() {
-//      if (){
-
-//      }
-//     this.$router.push({ name: "pagehome" }).catch(() => {}); //.catch(() => {}) мы обработали ошибку, пожалуйста, не печатайте ошибку в инструментах разработчика.
-//   },
 };
 </script>
 

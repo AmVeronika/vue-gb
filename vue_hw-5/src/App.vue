@@ -1,21 +1,23 @@
 <template>
   <div id="app">
     <div class="links">
-      <router-link class="link-rout" to="/home">Home</router-link>
-      <router-link class="link-rout" to="/dashboard">Costs</router-link>
+      <router-link class="link-rout" to="/home">Home / </router-link>
+      <router-link class="link-rout" to="/dashboard">Costs / </router-link>
       <router-link class="link-rout" to="/hello">Hello</router-link>
     </div>
     <main>
-      <router-view></router-view>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
     </main>
   </div>
 </template>
 
+
 <script>
 export default {
-  name: "App"
+  name: "App",
 };
-
 </script>
 <style scoped>
 #app {

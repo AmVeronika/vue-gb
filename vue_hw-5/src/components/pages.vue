@@ -3,7 +3,7 @@
     <router-link
       :to="'/dashboard/' + (page + 1)"
       class="btn-page"
-      :class="[activePage == page + 1 ? 'btn-page-active' : '']"
+      :class="{ active: activePage == page + 1 }"
       v-for="(m, page) in paymentsLists"
       :key="page"
     >
@@ -20,13 +20,11 @@ export default {
   methods: {},
   computed: {
     ...mapState(["paymentsLists"]),
-    activePage() {
+    activePage() { 
+      // номер ссылки в зависимости от страницы(номер эллемента в массиве)
       return this.$route.params.page;
     },
-  },
-  created() {
-     this.$route.params.page = this.paymentsLists.length
-  },
+  }
 };
 </script>
 <style scoped>
@@ -41,7 +39,7 @@ export default {
   padding: 10px;
   width: 70px;
 }
-.btn-page-active {
+.router-link-active {
   background: rgb(68, 28, 28);
   color: azure;
 }
