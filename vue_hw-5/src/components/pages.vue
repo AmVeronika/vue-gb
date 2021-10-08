@@ -25,9 +25,7 @@ export default {
       return this.$route.params.page;
     },
   },
-  updated() {
-     console.log(this.paymentsLists.length);
-       
+  updated() {       
     if (this.$route.params.page > this.paymentsLists.length) {
       this.$router.replace({ path: `/dashboard/${this.paymentsLists.length}` });
     }
