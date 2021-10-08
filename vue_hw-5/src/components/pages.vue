@@ -20,11 +20,18 @@ export default {
   methods: {},
   computed: {
     ...mapState(["paymentsLists"]),
-    activePage() { 
+    activePage() {
       // номер ссылки в зависимости от страницы(номер эллемента в массиве)
       return this.$route.params.page;
     },
-  }
+  },
+  updated() {
+     console.log(this.paymentsLists.length);
+       
+    if (this.$route.params.page > this.paymentsLists.length) {
+      this.$router.replace({ path: `/dashboard/${this.paymentsLists.length}` });
+    }
+  },
 };
 </script>
 <style scoped>

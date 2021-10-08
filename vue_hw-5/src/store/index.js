@@ -8,7 +8,6 @@ export default new Vuex.Store({
       paymentsLists: [],//массив массивов с объектами
       categoryList: [],//Массив с категориями
       currentPage: 1, //Текущая страница
-      bool: false
    },
    mutations: {
       setPaymentsListData(state, payload) {
@@ -35,12 +34,6 @@ export default new Vuex.Store({
             }
          }
       },
-      changeBool(state){
-         state.bool = !state.bool
-      },
-      openBool(state, boolean) {
-         state.bool = boolean
-      }
    },
    getters: {
       getInfoPage: state => state.paymentsLists, // Передача страницы для отображения

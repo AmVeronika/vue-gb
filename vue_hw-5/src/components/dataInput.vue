@@ -1,6 +1,6 @@
 <template>
   <div class="oppo">
-    <button class="add-costs" @click="changeBool">add new cost +</button>
+    <button class="add-costs" @click="bool = !bool">add new cost +</button>
     <div class="inputs" v-show="bool">
       <input
         v-model="date"
@@ -36,17 +36,22 @@ export default {
       date: "",
       category: "",
       price: null,
+      bool: false,
     };
   },
   watch: {
     $route(to) {
       // способ отслеживания изменения роутинга
-      this.category = to.params.category;
-      this.price = to.query.value;
+      if (to.name == "autoDataPay") {
+        this.category = to.params.category;
+        this.price = to.query.value;
+        this.bool = true;
+        this.$router.push({path: `/dashboard/${this.currentPage}`})
+      }
     },
   },
   computed: {
-    ...mapState(["paymentsLists", "categoryList", "bool"]),
+    ...mapState(["paymentsLists", "categoryList", "currentPage"]),
   },
   methods: {
     ...mapMutations(["addInfoPage", "changeBool"]),
@@ -54,13 +59,20 @@ export default {
     clickSendData() {
       //передача формы данных
       if (this.category && this.price) {
-        if (!this.date) { //Если дата не указана, поставить текущий день
+        if (!this.date) {
+          //Если дата не указана, поставить текущий день
           const today = new Date();
-          let dateToday = today.getDate()
-          if(dateToday <10) { // Привожу к общему виду
-             dateToday = `0${dateToday}`
+          let dateToday = today.getDate();
+          if (dateToday < 10) {
+            // Привожу к общему виду
+            dateToday = `0${dateToday}`;
           }
-          const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+dateToday;
+          const date =
+            today.getFullYear() +
+            "-" +
+            (today.getMonth() + 1) +
+            "-" +
+            dateToday;
           this.date = date;
         }
         let lastPageCont = this.paymentsLists[this.paymentsLists.length - 1];

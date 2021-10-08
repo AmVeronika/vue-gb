@@ -58,12 +58,4 @@ router.beforeEach((to, from, next) => {
       next()
    }
 });
-// router.beforeResolve((to, from, next) => {
-//    if (to.name == 'autoDataPay') {
-//       // При открытии отображается крайняя страница с данными 
-//       next({ name: `autoDataPay` })
-//    } else {
-//       next()
-//    }
-// })
 export default router;
