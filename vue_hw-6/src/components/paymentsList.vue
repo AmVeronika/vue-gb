@@ -18,7 +18,7 @@
         <li class="item item-value">
           {{ i.value }}
           <button class="payments-list__btn" @click="showModalWindow">
-            ...      <ModalWindow v-if="modalWindowName" :settings="settings" />
+            ...
           </button>
         </li>
       </ul>
@@ -27,20 +27,16 @@
 </template>
 
 <script>
-import ModalWindow from "../pages/ModalWindow.vue"; //------ !!!!!!!!!!!-------------
 import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Discount",
-    data() {
+  data() {
     return {
-      modalWindowName: '', //------ !!!!!!!!!!!-------------
-      settings: {}, //------ !!!!!!!!!!!-------------
+      flagModalW: false,
     };
   },
-    components: {
-    ModalWindow,
-  },
+  components: {},
   computed: {
     ...mapGetters(["getInfoPage"]),
     currPage() {
@@ -52,25 +48,15 @@ export default {
   },
   methods: {
     ...mapActions(["fetchData"]),
-     onShow( {settings} ) {      //------ !!!!!!!!!!!-------------
-      this.modalWindowName = settings.compName;
-      this.settings = settings;
-      console.log(this.settings);
-    },
-    onHide() {      //------ !!!!!!!!!!!-------------
-      this.modalWindoName = "";
-      this.settings = {};
-    },
-
-    showModalWindow() {      //------ !!!!!!!!!!!-------------
-      this.$modal.show("paymentrevision", { compName: 'PaymentRevision'});
+    showModalWindow() {
+      //------ !!!!!!!!!!!-------------
+      this.flagModalW = !this.flagModalW;
+      if (this.flagModalW == true) {
+        this.$modal.show("PaymentRevision", { compName: "PaymentRevision" });
+      } else
+      this.$modal.hide();
     },
   },
-    mounted() {
-    this.$modal.EventBus.$on("show", this.onShow);
-    this.$modal.EventBus.$on("hide", this.onHide);
-  },
-
 };
 </script>
 
@@ -104,6 +90,5 @@ export default {
 .payments-list__btn {
   height: 100%;
   background: rgb(193, 246, 221);
-  position: relative;
 }
 </style>

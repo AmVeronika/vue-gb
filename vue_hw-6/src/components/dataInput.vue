@@ -1,7 +1,6 @@
 <template>
   <div class="oppo">
-    <button class="add-costs" @click="bool = !bool">add new cost +</button>
-    <div class="inputs" v-show="bool">
+    <div class="inputs" >
       <input
         v-model="date"
         class="data-input"
@@ -36,7 +35,6 @@ export default {
       date: "",
       category: "",
       price: null,
-      bool: false,
     };
   },
   watch: {
@@ -54,7 +52,7 @@ export default {
     ...mapState(["paymentsLists", "categoryList", "currentPage"]),
   },
   methods: {
-    ...mapMutations(["addInfoPage", "changeBool"]),
+    ...mapMutations(["addInfoPage"]),
     ...mapActions(["fetchCategory"]),
     clickSendData() {
       //передача формы данных
@@ -96,6 +94,7 @@ export default {
 .oppo {
   display: flex;
   flex-direction: column;
+  background: #fff;
 }
 .inputs {
   margin-top: 25px;
@@ -110,9 +109,5 @@ export default {
 .data-input-but {
   padding: 2px 10px;
 }
-.add-costs {
-  background: rgb(28, 151, 114);
-  padding: 7px;
-  color: white;
-}
+
 </style>

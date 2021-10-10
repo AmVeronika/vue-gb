@@ -2,7 +2,8 @@
   <div class="page-dashboard">
     <h1>My personal costs</h1>
     <autoCompleteData/>
-    <dataInput ></dataInput>
+    <button class="add-costs" @click="bools">add new cost +</button>
+    <dataInput v-show="bool" ></dataInput>
     <paymentsList></paymentsList>
     <pages></pages>
   </div>
@@ -18,6 +19,11 @@ import { mapActions } from "vuex";
 
 export default {
   name: "pageDashboard",
+  data() {
+     return {
+      bool: false,
+     }
+  },
   components: {
     dataInput,
     paymentsList,
@@ -26,6 +32,10 @@ export default {
   },
   methods: {
     ...mapActions(["fetchData"]),
+    bools(){
+       this.bool = !this.bool
+       this.$emit('bools', this.bool)
+    }
   },
   created() {
     this.fetchData();
@@ -33,4 +43,11 @@ export default {
 };
 </script>
 
+<style scoped>
+.add-costs {
+  background: rgb(28, 151, 114);
+  padding: 7px;
+  color: white;
+}
+</style>
 
