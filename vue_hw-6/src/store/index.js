@@ -8,6 +8,7 @@ export default new Vuex.Store({
       paymentsLists: [],//массив массивов с объектами
       categoryList: [],//Массив с категориями
       currentPage: 1, //Текущая страница
+      bool: false// Открытие/Скрытие поля формы для заполнения платежей
    },
    mutations: {
       setPaymentsListData(state, payload) {
@@ -16,6 +17,20 @@ export default new Vuex.Store({
             return payload[pageName]
          });
          state.currentPage = Object.keys(payload).length;
+      },
+      deletePaymentsListData(state, payload) {
+         let arrObj = [];
+         let arrOne;
+         let arrTwo;
+         state.paymentsLists.forEach(el => {
+            return arrObj.push(el.indexOf(payload))
+         })
+         arrOne = arrObj.findIndex(el => el >= 0);//индекс массива, в котором массив с объектом
+         arrTwo = state.paymentsLists[arrOne].findIndex(el => el == payload);
+         state.paymentsLists[arrOne].splice(arrTwo, 1);
+         console.log( state.paymentsLists);
+
+
       },
       setCategoryList(state, payload) {
          if (!Array.isArray(payload)) {
@@ -34,9 +49,19 @@ export default new Vuex.Store({
             }
          }
       },
+      changeOfBoolValue(state) {
+         state.bool = !state.bool
+      },
+      openBoolValue(state) {
+         if (state.bool == true) {
+            return
+         } else state.bool = true
+      },
+
    },
    getters: {
       getInfoPage: state => state.paymentsLists, // Передача страницы для отображения
+
    },
    actions: {
       async fetchData({ commit }) {

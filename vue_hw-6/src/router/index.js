@@ -2,10 +2,6 @@ import Vue from 'vue'
 import store from '../store'
 import Router from 'vue-router'
 
-import pageHome from "../pages/pageHome";
-import pageDashboard from "../pages/pageDashboard";
-import pageHello from "../pages/pageHello";
-import noPage from "../pages/noPage";
 
 
 
@@ -16,33 +12,38 @@ const router = new Router({
       {
          path: '/home',
          name: 'pagehome',
-         component: pageHome
+         component: ()=> import('../pages/pageHome')
       },
       {
          path: '/dashboard',
          name: 'pagedashboard',
-         component: pageDashboard
+         component: ()=> import('../pages/pageDashboard')
       },
       {
          path: '/dashboard/:page',
          name: 'pagedashboards',
-         component: pageDashboard
+         component: ()=> import('../pages/pageDashboard')
       },
       {
          path: '/hello',
          name: 'pagehello',
-         component: pageHello
+         component: ()=> import('../pages/pageHello')
       },
       //Добавление данных
       {
          path: '/add/payment/:category*',
          name: 'autoDataPay',
-         component: pageDashboard,
+         component: ()=> import('../pages/pageDashboard')
+      },
+      {
+         path: '/edit/payment/:category*',
+         name: 'editDataPay',
+         component: ()=> import('../pages/pageDashboard')
       },
       {
          path: '/404',
          name: 'nopage',
-         component: noPage
+         component: ()=> import('../pages/noPage')
       },
       {
          path: '*',

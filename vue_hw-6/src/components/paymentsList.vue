@@ -17,8 +17,9 @@
         <li class="item item-value">{{ i.category }}</li>
         <li class="item item-value">
           {{ i.value }}
-          <button class="payments-list__btn" @click="showModalWindow">
+          <button class="payments-list__btn" @click="showModalWindow(i)">
             ...
+            <ModalWindow v-if="modalWindowId === i.id" :settings="settings" />
           </button>
         </li>
       </ul>
@@ -27,16 +28,22 @@
 </template>
 
 <script>
+import ModalWindow from "../pages/ModalWindow.vue"; //------ !!!!!!!!!!!-------------
 import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Discount",
   data() {
     return {
+      modalWindowName: "", //------ !!!!!!!!!!!-------------
+      modalWindowId: null,
+      settings: {}, //------ !!!!!!!!!!!-------------
       flagModalW: false,
     };
   },
-  components: {},
+  components: {
+    ModalWindow,
+  },
   computed: {
     ...mapGetters(["getInfoPage"]),
     currPage() {
@@ -48,14 +55,30 @@ export default {
   },
   methods: {
     ...mapActions(["fetchData"]),
-    showModalWindow() {
-      //------ !!!!!!!!!!!-------------
+    onShow({ settings }) { //------ !!!!!!!!!!!-------------
+      this.modalWindowName = settings.compName;
+      this.modalWindowId = settings.id;
+      this.settings = settings;
+    },
+    onHide() { //------ !!!!!!!!!!!-------------
+      this.modalWindowName = "";
+      this.modalWindowId = null;
+      this.settings = {};
+    },
+    showModalWindow(obj) { //------ !!!!!!!!!!!-------------
       this.flagModalW = !this.flagModalW;
       if (this.flagModalW == true) {
-        this.$modal.show("PaymentRevision", { compName: "PaymentRevision" });
-      } else
-      this.$modal.hide();
+        this.$modal.show("PaymentRevision", { compName: "PaymentRevision", id: obj.id, settings: obj});
+      } else this.$modal.hide();
     },
+  },
+  mounted() {//------ !!!!!!!!!!!-------------
+    this.$modal.EventBus.$on("show", this.onShow);
+    this.$modal.EventBus.$on("hide", this.onHide);
+  },
+  beforeDestroy() {//------ !!!!!!!!!!!-------------
+    this.$modal.EventBus.$off("show", this.onShow);
+    this.$modal.EventBus.$off("hide", this.onHide);
   },
 };
 </script>
@@ -86,9 +109,12 @@ export default {
 }
 .item-value {
   font-weight: 500;
+  display: flex;
+  justify-content: space-between;
 }
 .payments-list__btn {
   height: 100%;
   background: rgb(193, 246, 221);
+  position: relative;
 }
 </style>

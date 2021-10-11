@@ -1,6 +1,6 @@
 <template>
   <div class="oppo">
-    <div class="inputs" >
+    <div class="inputs">
       <input
         v-model="date"
         class="data-input"
@@ -43,8 +43,12 @@ export default {
       if (to.name == "autoDataPay") {
         this.category = to.params.category;
         this.price = to.query.value;
-        this.bool = true;
-        this.$router.push({path: `/dashboard/${this.currentPage}`})
+        this.$router.push({ path: `/dashboard/${this.currentPage}` });
+      } else if (to.name == "editDataPay") {
+        this.date = to.params.component.date;
+        this.category = to.params.component.category;
+        this.price = to.params.component.value;
+        this.$router.push({ path: `${to.params.url}` });
       }
     },
   },
@@ -81,6 +85,7 @@ export default {
           category: this.category,
           value: this.price,
         };
+        this.$router.push({ path: `/dashboard/${this.paymentsLists.length}` });
         this.addInfoPage(info); // загрузка в массив
       }
     },
@@ -90,6 +95,7 @@ export default {
   },
 };
 </script>
+
 <style scoped>
 .oppo {
   display: flex;
@@ -109,5 +115,4 @@ export default {
 .data-input-but {
   padding: 2px 10px;
 }
-
 </style>
