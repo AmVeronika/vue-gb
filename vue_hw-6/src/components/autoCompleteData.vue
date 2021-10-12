@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h2>Auto-complete data</h2>
+  <div class="auto-complete-data">
+    <h2 class="auto-complete-data__h2">Auto-complete data</h2>
     <ul>
       <li @click="openBoolValue">
         <router-link to="/add/payment/food?value=200"
@@ -37,3 +37,14 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.auto-complete-data {
+  position: absolute;
+  top: 8px;
+  right: 4px;
+}
+.auto-complete-data__h2 {
+  margin-top: 0;
+}
+</style>

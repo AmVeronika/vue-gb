@@ -14,7 +14,6 @@
 </template>
 
 <script>
-
 export default {
   name: "App",
 };
@@ -40,6 +39,9 @@ export default {
 }
 .links {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  position: fixed;
+  top:25px;
+  left: 25px;
 }
 </style>

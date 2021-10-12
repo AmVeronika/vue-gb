@@ -35,6 +35,8 @@ export default {
       date: "",
       category: "",
       price: null,
+      oldIndexWithEl: null, //Данные при нажатии на кнопку редактировать
+      page: null,
     };
   },
   watch: {
@@ -43,12 +45,15 @@ export default {
       if (to.name == "autoDataPay") {
         this.category = to.params.category;
         this.price = to.query.value;
-        this.$router.push({ path: `/dashboard/${this.currentPage}` });
+        this.$router
+          .push({ path: `/dashboard/${this.currentPage}` })
+          .catch(() => {});
       } else if (to.name == "editDataPay") {
         this.date = to.params.component.date;
         this.category = to.params.component.category;
         this.price = to.params.component.value;
-        this.$router.push({ path: `${to.params.url}` });
+        this.oldIndexWithEl = to.params.component;
+        this.$router.push({ path: `${to.params.url}` }).catch(() => {});
       }
     },
   },
@@ -85,8 +90,16 @@ export default {
           category: this.category,
           value: this.price,
         };
-        this.$router.push({ path: `/dashboard/${this.paymentsLists.length}` });
-        this.addInfoPage(info); // загрузка в массив
+        let payload = {
+          info: info,
+          page: this.$route.params.page - 1,
+          old: this.oldIndexWithEl,
+        };
+        this.$router
+         //  .push({ path: `/dashboard/${this.paymentsLists.length}` })
+         //  .catch(() => {});
+        this.addInfoPage(payload); // загрузка в массив
+        this.oldIndexWithEl = null;
       }
     },
   },

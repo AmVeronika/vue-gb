@@ -8,7 +8,7 @@ export default new Vuex.Store({
       paymentsLists: [],//массив массивов с объектами
       categoryList: [],//Массив с категориями
       currentPage: 1, //Текущая страница
-      bool: false// Открытие/Скрытие поля формы для заполнения платежей
+      bool: false,// Открытие/Скрытие поля формы для заполнения платежей
    },
    mutations: {
       setPaymentsListData(state, payload) {
@@ -18,7 +18,7 @@ export default new Vuex.Store({
          });
          state.currentPage = Object.keys(payload).length;
       },
-      deletePaymentsListData(state, payload) {
+      deletePaymentsListData(state, payload) { //Удаление строчки с покупкой
          let arrObj = [];
          let arrOne;
          let arrTwo;
@@ -26,26 +26,39 @@ export default new Vuex.Store({
             return arrObj.push(el.indexOf(payload))
          })
          arrOne = arrObj.findIndex(el => el >= 0);//индекс массива, в котором массив с объектом
-         arrTwo = state.paymentsLists[arrOne].findIndex(el => el == payload);
-         state.paymentsLists[arrOne].splice(arrTwo, 1);
-         console.log( state.paymentsLists);
-
-
+         arrTwo = state.paymentsLists[arrOne].findIndex(el => el == payload);//Индекс объекта в массиве, который удаляют
+         state.paymentsLists[arrOne].splice(arrTwo, 1);//Удаление строки
+         state.paymentsLists.forEach((item, ind) => {
+            if (item.length == 0) {// Если 0 элементов на странице, удалить пустой массив из массива массивов {
+               state.paymentsLists.splice(ind, 1)
+            }
+            if (item.length == 2 && state.paymentsLists[++arrOne]) {
+               item.push(...state.paymentsLists[++ind].splice(0, 1));
+            }
+         })
       },
       setCategoryList(state, payload) {
          if (!Array.isArray(payload)) {
             state.categoryList.push(...[payload])
          } else state.categoryList.push(...payload)
       },
-      addInfoPage(state, item) {
-         let lastPagewithItems = state.paymentsLists[state.paymentsLists.length - 1];
-         let quontItemsOnTheLastPage = lastPagewithItems.length;
-         if (item) {
-            if (quontItemsOnTheLastPage < 3) { // Если меньше 3 элементов отображается на странице
-               lastPagewithItems.push(item)
-            } else if (quontItemsOnTheLastPage == 3) {
-               state.paymentsLists.push([item]);
-               state.currentPage = state.paymentsLists.length
+      addInfoPage(state, payload) {
+         let lastPagewithItems = state.paymentsLists[state.paymentsLists.length - 1]; // Крайний массив(страница) с объектами(строчками)
+         let quantItemsOnTheLastPage = lastPagewithItems.length; // Длина крайнего массива
+         if (payload.old) {
+            let IndexWithElem = state.paymentsLists[payload.page].findIndex(el => el.date == payload.old.date && el.category == payload.old.category && el.value == payload.old.value); // индекс соответсвия вводимых данных с теми, что надо отредактировать 
+            state.paymentsLists[payload.page].splice(IndexWithElem, 1, payload.info)// И переписываем данные 
+         } else {
+            let IndexWithElemNew
+            state.paymentsLists.forEach(i => {
+               IndexWithElemNew = i.findIndex(el => el.date == payload.info.date && el.category == payload.info.category && el.value == payload.info.value); // индекс соответсвия вводимых данных с новыми (-1 если совпадений нет и >= 0 - индекс совпадения)
+            })
+            if (IndexWithElemNew == -1) {
+               if (quantItemsOnTheLastPage < 3) { // Если меньше 3 элементов отображается на странице
+                  lastPagewithItems.push(payload.info)
+               }
+            } else if (quantItemsOnTheLastPage == 3) {
+               state.paymentsLists.push([payload.info]);
             }
          }
       },

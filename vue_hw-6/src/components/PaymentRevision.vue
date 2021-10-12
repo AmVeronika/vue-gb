@@ -1,19 +1,7 @@
 <template>
   <div class="paymentrevision">
-    <button
-      class="modal-window__edit"
-      :settings="settings"
-      @click="editDataUser"
-    >
-      Edit
-    </button>
-    <button
-      class="modal-window__delete"
-      :settings="settings"
-      @click="deleteDataUser"
-    >
-      Delete
-    </button>
+    <button class="modal-window__edit" :settings="settings" @click="editDataUser"> Edit </button>
+    <button class="modal-window__delete" :settings="settings" @click="deleteDataUser"> Delete </button>
   </div>
 </template>
 
@@ -36,15 +24,9 @@ export default {
     ...mapState(["paymentsLists"]),
   },
   methods: {
-    ...mapMutations(["openBoolValue", "deletePaymentsListData"]),
+    ...mapMutations(["openBoolValue", "deletePaymentsListData",]),
     editDataUser() {
-      this.$router.push({
-        name: "editDataPay",
-        params: {
-          component: this.settings.settings,
-          url: this.$route.fullPath,
-        },
-      });
+      this.$router.push({ name: "editDataPay", params: { component: this.settings.settings, url: this.$route.fullPath }});
       this.openBoolValue();
       this.$modal.hide();
     },

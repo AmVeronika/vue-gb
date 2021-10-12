@@ -55,28 +55,37 @@ export default {
   },
   methods: {
     ...mapActions(["fetchData"]),
-    onShow({ settings }) { //------ !!!!!!!!!!!-------------
+    onShow({ settings }) {
+      //------ !!!!!!!!!!!-------------
       this.modalWindowName = settings.compName;
       this.modalWindowId = settings.id;
       this.settings = settings;
     },
-    onHide() { //------ !!!!!!!!!!!-------------
+    onHide() {
+      //------ !!!!!!!!!!!-------------
       this.modalWindowName = "";
       this.modalWindowId = null;
       this.settings = {};
     },
-    showModalWindow(obj) { //------ !!!!!!!!!!!-------------
+    showModalWindow(obj) {
+      //------ !!!!!!!!!!!-------------
       this.flagModalW = !this.flagModalW;
       if (this.flagModalW == true) {
-        this.$modal.show("PaymentRevision", { compName: "PaymentRevision", id: obj.id, settings: obj});
+        this.$modal.show("PaymentRevision", {
+          compName: "PaymentRevision",
+          id: obj.id,
+          settings: obj,
+        });
       } else this.$modal.hide();
     },
   },
-  mounted() {//------ !!!!!!!!!!!-------------
+  mounted() {
+    //------ !!!!!!!!!!!-------------
     this.$modal.EventBus.$on("show", this.onShow);
     this.$modal.EventBus.$on("hide", this.onHide);
   },
-  beforeDestroy() {//------ !!!!!!!!!!!-------------
+  beforeDestroy() {
+    //------ !!!!!!!!!!!-------------
     this.$modal.EventBus.$off("show", this.onShow);
     this.$modal.EventBus.$off("hide", this.onHide);
   },
@@ -86,6 +95,7 @@ export default {
 <style scoped>
 .payments-ul {
   padding-left: 0px;
+  margin-bottom: -10px;
   height: 150px;
 }
 .payments-list-title,
