@@ -19,7 +19,9 @@
           {{ i.value }}
           <button class="payments-list__btn" @click="showModalWindow(i)">
             ...
+            <transition name="modal-anim">
             <ModalWindow v-if="modalWindowId === i.id" :settings="settings" />
+            </transition>
           </button>
         </li>
       </ul>
@@ -127,4 +129,13 @@ export default {
   background: rgb(193, 246, 221);
   position: relative;
 }
+
+/* ANIMATION */
+.modal-anim-enter-active, .modal-anim-leave-active {
+   transition: opacity .2s;
+}
+.modal-anim-enter, .modal-anim-leave-to {
+  opacity: 0;
+}
+
 </style>

@@ -5,9 +5,13 @@
       Auto complete data
     </button>
     <br />
-    <autoCompleteData v-show="oppen" />
+    <transition name="modal-anim">
+      <autoCompleteData v-show="oppen" />
+    </transition>
     <button class="add-costs" @click="changeOfBoolValue">Add new cost +</button>
-    <dataInput v-show="bool"></dataInput>
+    <transition name="modal-anim">
+      <dataInput v-show="bool"></dataInput>
+    </transition>
     <paymentsList></paymentsList>
     <pages></pages>
   </div>
@@ -56,6 +60,15 @@ export default {
   padding: 7px;
   color: white;
   margin-bottom: 10px;
+}
+/* ANIMATION */
+.modal-anim-enter-active,
+.modal-anim-leave-active {
+  transition: opacity 0.2s;
+}
+.modal-anim-enter,
+.modal-anim-leave-to {
+  opacity: 0;
 }
 </style>
 
