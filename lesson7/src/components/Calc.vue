@@ -1,7 +1,17 @@
 <template>
   <div class="calc">
-    <input class="calc__input" @input="input='left'" v-model.number="operand1" type="number"/>
-    <input class="calc__input" @input="input='right'" v-model.number="operand2" type="number"/>
+    <input
+      class="calc__input"
+      @input="(input = 'left')"
+      v-model.number="operand1"
+      type="number"
+    />
+    <input
+      class="calc__input"
+      @input="(input = 'right')"
+      v-model.number="operand2"
+      type="number"
+    />
     <div>
       <div class="buttons">
         <button
@@ -60,7 +70,7 @@ export default {
       checked: true,
       picked: true,
       buttons: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "del"],
-      input: 'left',
+      input: "left",
     };
   },
   methods: {
@@ -101,23 +111,32 @@ export default {
       this.result = "";
       if (value !== "del") {
         if (this.picked == "right") {
-         this.operand2 = "" + this.operand2;
-         this.operand2 = this.operand2 + +value;
-         this.operand2 =  +this.operand2 
+          if (!this.operand2) {
+            this.operand2 = 0;
+          }
+          this.operand2 = "" + this.operand2;
+          if (this.operand2.length < 10) {
+            this.operand2 = this.operand2 + +value;
+            this.operand2 = +this.operand2;
+          } else alert("максимально допустимое число"); //Если значение больше допустимого
         } else if (this.picked == "left") {
-         this.operand1 = "" + this.operand1;
-         this.operand1 += +value;
-         this.operand1 =  +this.operand1 
+          if (!this.operand1) {
+            this.operand1 = 0;
+          }
+
+          this.operand1 = "" + this.operand1;
+          this.operand1 += +value;
+          this.operand1 = +this.operand1;
         } else {
           this.result = "Вы не выбрали поле";
         }
       }
       if (value === "del") {
-        if (this.picked == "right" || this.input == 'right') {
+        if (this.picked == "right") {
           this.operand2 = "" + this.operand2;
           this.operand2 = this.operand2.replace(/\d\b/, "");
           this.operand2 = +this.operand2;
-        } else if (this.picked == "left" || this.input == 'left') {
+        } else if (this.picked == "left") {
           this.operand1 = "" + this.operand1;
           this.operand1 = this.operand1.replace(/\d\b/, "");
           this.operand1 = +this.operand1;
