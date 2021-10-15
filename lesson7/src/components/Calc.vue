@@ -2,13 +2,15 @@
   <div class="calc">
     <input
       class="calc__input"
-      @input="(input = 'left')"
+      @input="input = 'left'"
+      name="operand1"
       v-model.number="operand1"
       type="number"
     />
     <input
       class="calc__input"
-      @input="(input = 'right')"
+      @input="input = 'right'"
+      name="operand2"
       v-model.number="operand2"
       type="number"
     />
@@ -19,6 +21,7 @@
           @click="calculate(operator)"
           v-for="operator in operators"
           :key="operator"
+          :name="operator"
         >
           {{ operator }}
         </button>
@@ -43,6 +46,7 @@
         @click="valueTransfer(btn)"
         v-for="btn in buttons"
         :key="btn"
+        :name="btn"
       >
         {{ btn }}
       </button>
@@ -115,21 +119,19 @@ export default {
             this.operand2 = 0;
           }
           this.operand2 = "" + this.operand2;
-          if (this.operand2.length < 10) {
-            this.operand2 = this.operand2 + +value;
-            this.operand2 = +this.operand2;
-          } else alert("максимально допустимое число"); //Если значение больше допустимого
+          this.operand2 = this.operand2 + +value;
+          this.operand2 = +this.operand2;
         } else if (this.picked == "left") {
           if (!this.operand1) {
             this.operand1 = 0;
           }
-
           this.operand1 = "" + this.operand1;
           this.operand1 += +value;
           this.operand1 = +this.operand1;
-        } else {
-          this.result = "Вы не выбрали поле";
-        }
+        } 
+      //   else {
+      //     this.result = "Вы не выбрали поле";
+      //   }
       }
       if (value === "del") {
         if (this.picked == "right") {

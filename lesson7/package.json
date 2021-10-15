@@ -7,7 +7,7 @@
       "build": "vue-cli-service build",
       "test:unit": "vue-cli-service test:unit",
       "lint": "vue-cli-service lint",
-      "test": "jest"
+      "test": "jest --coverage"
    },
    "jest": {
       "moduleFileExtensions": [
@@ -16,7 +16,12 @@
       ],
       "transform": {
          ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
-      }
+      },
+      "collectCoverage": true,
+      "collectCoverageFrom": [
+         "**/*.{js,vue}",
+         "!**/node_modules/**"
+      ]
    },
    "dependencies": {
       "core-js": "^3.6.5",
