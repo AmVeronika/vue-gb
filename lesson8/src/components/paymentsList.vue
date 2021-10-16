@@ -1,32 +1,38 @@
 <template>
-  <div class="payments-list">
-    <ul class="payments-ul">
-      <ul class="payments-list-title">
-        <li class="item item-title">#</li>
-        <li class="item item-title">Date</li>
-        <li class="item item-title">Category</li>
-        <li class="item item-title">Value</li>
-      </ul>
-      <ul
-        class="payments-list-punkt"
-        v-for="(i, ind) in getCurrData"
-        :key="ind"
+  <v-container>
+    <v-alert outlined shaped class="orange darken-2">
+      <v-alert outlined>
+        <v-row class="orange darken-4">
+          <v-col class="font-weight-bold text-h6">#</v-col>
+          <v-col class="font-weight-bold text-h6">Date</v-col>
+          <v-col class="font-weight-bold text-h6">Category</v-col>
+          <v-col class="font-weight-bold text-h6">Value</v-col>
+        </v-row></v-alert
       >
-        <li class="item item-value">{{ currPage * 3 - 2 + ind }}</li>
-        <li class="item item-value">{{ i.date }}</li>
-        <li class="item item-value">{{ i.category }}</li>
-        <li class="item item-value">
-          {{ i.value }}
-          <button class="payments-list__btn" @click="showModalWindow(i)">
-            ...
-            <transition name="modal-anim">
-            <ModalWindow v-if="modalWindowId === i.id" :settings="settings" />
-            </transition>
-          </button>
-        </li>
-      </ul>
-    </ul>
-  </div>
+      <v-alert outlined>
+        <v-row class="" v-for="(i, ind) in getCurrData" :key="ind">
+          <v-col class="text-lg-h6">{{ currPage * 3 - 2 + ind }}</v-col>
+          <v-col class="text-lg-h6">{{ i.date }}</v-col>
+          <v-col class="text-lg-h6">{{ i.category }}</v-col>
+
+          <v-col class="text-lg-h6 d-flex justify-space-between">
+            {{ i.value }}
+            <v-btn
+              class="font-weight-black text-h5"
+              @click="showModalWindow(i)"
+            >
+              ...
+            </v-btn>
+            <v-scroll-x-transition leave-absolute>
+              <v-card v-show="modalWindowId === i.id">
+                <ModalWindow :settings="settings" />
+              </v-card>
+            </v-scroll-x-transition>
+          </v-col>
+        </v-row>
+      </v-alert>
+    </v-alert>
+  </v-container>
 </template>
 
 <script>
@@ -72,13 +78,11 @@ export default {
     showModalWindow(obj) {
       //------ !!!!!!!!!!!-------------
       this.flagModalW = !this.flagModalW;
-      if (this.flagModalW == true) {
         this.$modal.show("PaymentRevision", {
           compName: "PaymentRevision",
           id: obj.id,
           settings: obj,
         });
-      } else this.$modal.hide();
     },
   },
   mounted() {
@@ -95,47 +99,4 @@ export default {
 </script>
 
 <style scoped>
-.payments-ul {
-  padding-left: 0px;
-  margin-bottom: -10px;
-  height: 150px;
-}
-.payments-list-title,
-.payments-list-punkt {
-  display: flex;
-  list-style-type: none;
-  padding-left: 0;
-  row-gap: 20px;
-  justify-content: space-between;
-}
-.item {
-  padding: 5px;
-}
-.item-title,
-.item-value {
-  width: 100%;
-  font-weight: 700;
-  border: 1px solid black;
-  display: flex;
-  justify-content: space-between;
-}
-.item-value {
-  font-weight: 500;
-  display: flex;
-  justify-content: space-between;
-}
-.payments-list__btn {
-  height: 100%;
-  background: rgb(193, 246, 221);
-  position: relative;
-}
-
-/* ANIMATION */
-.modal-anim-enter-active, .modal-anim-leave-active {
-   transition: opacity .2s;
-}
-.modal-anim-enter, .modal-anim-leave-to {
-  opacity: 0;
-}
-
 </style>

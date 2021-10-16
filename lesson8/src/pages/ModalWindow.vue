@@ -1,8 +1,8 @@
 <template>
-  <div class="modal-window" @click.stop.prevent>
+  <div class="modal-window pl-2 pr-2 brown lighten-4" @click.stop.prevent>
     <div class="modal-window__content">
       <component :is="settings.compName" :settings="settings"></component>
-      <button class="modal-window__btn" @click="onCloseModalWindow">X</button>
+      <v-btn class="modal-window__btn" x-small @click="onCloseModalWindow">X</v-btn>
     </div>
   </div>
 </template>
@@ -10,7 +10,6 @@
 <script>
 import PaymentRevision from "../components/PaymentRevision.vue";
 import dataInput from "../components/dataInput.vue";
-
 
 export default {
   name: "ModalWindow",
@@ -33,13 +32,11 @@ export default {
 
 <style scoped>
 .modal-window {
-  width: max-content;
-  border: 1px solid #6491edd4;
   position: absolute;
   background: rgb(238, 229, 229);
-  z-index: 2;
-  top: -5px;
-  left: 35px;
+
+  top: -9px;
+  left: -21px;
 }
 .modal-window__content {
   width: max-content;
@@ -51,8 +48,8 @@ export default {
   border: none;
   font-weight: 700;
   position: absolute;
-  top: 3px;
-  right: 2px;
+  top: 2px;
+  right: -5px;
   cursor: pointer;
 }
 </style>

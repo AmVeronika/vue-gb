@@ -1,7 +1,7 @@
 <template>
   <div class="paymentrevision">
-    <button class="modal-window__edit" :settings="settings" @click="editDataUser"> Edit </button>
-    <button class="modal-window__delete" :settings="settings" @click="deleteDataUser"> Delete </button>
+    <v-btn class=" pr-2" :settings="settings" @click="editDataUser"> Edit </v-btn>
+    <v-btn :settings="settings" @click="deleteDataUser"> Delete </v-btn>
   </div>
 </template>
 

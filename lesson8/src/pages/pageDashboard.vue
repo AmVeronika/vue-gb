@@ -1,17 +1,21 @@
 <template>
-  <div class="page-dashboard">
-    <h1>My personal costs</h1>
-    <button class="add-costs" @click="oppen = !oppen">
-      Auto complete data
-    </button>
+  <div class="rounded-xl amber lighten-1 pa-10 page-dash-board-pos">
+    <h1 class="text-h2 font-weight-black mb-10">Мои личные расходы</h1>
+    <v-btn
+      class="text-h5 font-weight-medium mb-10 purple--text" text
+      @click="oppen = !oppen"
+    >
+      Популярные расходы
+    </v-btn>
     <br />
-    <transition name="modal-anim">
-      <autoCompleteData v-show="oppen" />
-    </transition>
-    <button class="add-costs" @click="changeOfBoolValue">Add new cost +</button>
-    <transition name="modal-anim">
-      <dataInput v-show="bool"></dataInput>
-    </transition>
+    <autoCompleteData v-show="oppen" />
+    <v-btn
+      class="text-h5 font-weight-medium mb-5 purple--text" text
+      @click="changeOfBoolValue"
+    >
+      Добавить новые расходы +
+    </v-btn>
+    <dataInput v-show="bool"></dataInput>
     <paymentsList></paymentsList>
     <pages></pages>
   </div>
@@ -52,23 +56,8 @@ export default {
 </script>
 
 <style scoped>
-.page-dashboard {
-  position: relative;
-}
-.add-costs {
-  background: rgb(28, 151, 114);
-  padding: 7px;
-  color: white;
-  margin-bottom: 10px;
-}
-/* ANIMATION */
-.modal-anim-enter-active,
-.modal-anim-leave-active {
-  transition: opacity 0.2s;
-}
-.modal-anim-enter,
-.modal-anim-leave-to {
-  opacity: 0;
+.page-dash-board-pos {
+   position: relative;
 }
 </style>
 

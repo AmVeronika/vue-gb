@@ -1,29 +1,25 @@
 <template>
-  <div class="oppo">
-    <div class="inputs">
-      <input
-        v-model="date"
-        class="data-input"
-        placeholder="date"
-        type="date"
+  <v-alert outlined shaped class="amber lighten-3">
+    <div class="d-flex justify-space-around align-center">
+      <v-text-field class="mr-2" v-model="date" type="date" required></v-text-field>
+      <v-select class="mr-2"
+        v-model="category"
+        label="категории"
+        name="category"
+        :items="categoryList"
         required
-      />
-      <select v-model="category" class="data-input" name="category" required>
-        <option :value="opt" v-for="(opt, ind) in categoryList" :key="ind">
-          {{ opt }}
-        </option>
-      </select>
-      <input
+      ></v-select>
+      <v-text-field
         v-model.number="price"
-        class="data-input"
-        placeholder="price"
+        placeholder="цена"
         type="number"
-        value="100"
         required
-      />
-      <button @click="clickSendData" class="data-input-but">send</button>
+      >
+      </v-text-field>
+
+      <v-btn @click="clickSendData" class="brown lighten-1 pa-5 ml-2">отправить</v-btn>
     </div>
-  </div>
+  </v-alert>
 </template>
 
 <script>
@@ -65,7 +61,7 @@ export default {
     ...mapActions(["fetchCategory"]),
     clickSendData() {
       //передача формы данных
-      if (this.category && this.price) {
+      if (this.category && this.price) {         
         if (!this.date) {
           //Если дата не указана, поставить текущий день
           const today = new Date();
@@ -82,22 +78,26 @@ export default {
             dateToday;
           this.date = date;
         }
+
         let lastPageCont = this.paymentsLists[this.paymentsLists.length - 1];
         let lastItemId = lastPageCont[lastPageCont.length - 1].id; // id предыдущего значения
+        
         let info = {
           id: lastItemId + 1,
           date: this.date,
           category: this.category,
           value: this.price,
-        };
+        }; 
+      
         let payload = {
           info: info,
-          page: this.$route.params.page - 1,
+          page: this.$route.params.page,
           old: this.oldIndexWithEl,
         };
-        this.$router
-         //  .push({ path: `/dashboard/${this.paymentsLists.length}` })
-         //  .catch(() => {});
+        
+        this.$router;
+        //  .push({ path: `/dashboard/${this.paymentsLists.length}` })
+        //  .catch(() => {});
         this.addInfoPage(payload); // загрузка в массив
         this.oldIndexWithEl = null;
       }
@@ -110,22 +110,4 @@ export default {
 </script>
 
 <style scoped>
-.oppo {
-  display: flex;
-  flex-direction: column;
-  background: #fff;
-}
-.inputs {
-  margin-top: 25px;
-  display: flex;
-  align-items: center;
-  column-gap: 10px;
-  justify-content: space-between;
-}
-.data-input {
-  width: 130px;
-}
-.data-input-but {
-  padding: 2px 10px;
-}
 </style>

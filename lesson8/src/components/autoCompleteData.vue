@@ -1,23 +1,18 @@
 <template>
   <div class="auto-complete-data">
-    <h2 class="auto-complete-data__h2">Auto-complete data</h2>
-    <ul>
-      <li @click="openBoolValue">
-        <router-link to="/add/payment/food?value=200"
-          >Food с ценой 200</router-link
-        >
-      </li>
-      <li @click="openBoolValue">
-        <router-link to="/add/payment/unicorn?value=50"
-          >Unicorn с ценой 50</router-link
-        >
-      </li>
-      <li @click="openBoolValue">
-        <router-link to="/add/payment/pharmacy?value=2000"
-          >Pharmacy с ценой 2000</router-link
-        >
-      </li>
-    </ul>
+    <h2 class="auto-complete-data__h2">Автозаполнение</h2>
+    <div class="d-flex justify-space-between flex-column">
+      <v-btn to="/add/payment/food?value=200" class=" mb-1" @click="openBoolValue"
+        >Food с ценой 200</v-btn
+      >
+      <v-btn to="/add/payment/unicorn?value=50" class=" mb-1" @click="openBoolValue"
+        >Unicorn с ценой 50</v-btn
+      >
+      <v-btn to="/add/payment/pharmacy?value=2000" class=" mb-1" @click="openBoolValue"
+        >Pharmacy с ценой 2000</v-btn
+      >
+    </div>
+
     <router-view></router-view>
   </div>
 </template>
@@ -41,8 +36,8 @@ export default {
 <style scoped>
 .auto-complete-data {
   position: absolute;
-  top: 8px;
-  right: 4px;
+  top: 95px;
+  right: 179px;
 }
 .auto-complete-data__h2 {
   margin-top: 0;

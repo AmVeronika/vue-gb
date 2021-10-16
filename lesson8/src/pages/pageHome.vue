@@ -1,6 +1,6 @@
 <template>
-   <div class="home"> 
-      <video autoplay>
+   <div class="rounded-xl amber lighten-1 d-flex justify-center pt-6 pb-6" > 
+      <video autoplay class="rounded-xl" >
          <source src="../assets/dolina.mp4" >
       </video>
    </div>
@@ -16,7 +16,4 @@ export default {
 
 
 <style scoped>
-.home {
-   margin: 25px auto;
-}
 </style>

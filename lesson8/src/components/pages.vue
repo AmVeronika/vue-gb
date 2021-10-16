@@ -1,14 +1,13 @@
 <template>
-  <div class="btn-pages">
-    <router-link
+  <div class="d-flex justify-center" >
+    <v-btn
       :to="'/dashboard/' + (page + 1)"
-      class="btn-page"
       :class="{ active: activePage == page + 1 }"
       v-for="(m, page) in paymentsLists"
       :key="page"
     >
       {{ page + 1 }}
-    </router-link>
+    </v-btn>
   </div>
 </template>
 
@@ -33,19 +32,4 @@ export default {
 };
 </script>
 <style scoped>
-.btn-pages {
-  width: fit-content;
-  display: flex;
-  justify-content: space-between;
-  margin: 0 auto;
-  text-align: center;
-}
-.btn-page {
-  padding: 10px;
-  width: 70px;
-}
-.router-link-active {
-  background: rgb(68, 28, 28);
-  color: azure;
-}
 </style>

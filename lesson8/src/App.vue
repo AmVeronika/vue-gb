@@ -1,47 +1,33 @@
 <template>
-  <div id="app">
-    <div class="links">
-      <router-link class="link-rout" to="/home">Home / </router-link>
-      <router-link class="link-rout" to="/dashboard">Costs / </router-link>
-      <router-link class="link-rout" to="/hello">Hello</router-link>
-    </div>
-    <main>
-      <keep-alive>
-        <router-view></router-view>
-      </keep-alive>
-    </main>
-  </div>
+  <v-app >
+    <v-app-bar app absolute fixed class="purple accent-2">
+      <v-btn class="purple accent-4 mr-5" outlined to="/home"  @click="expand = !expand">Home</v-btn>
+      <v-btn class="purple accent-4 mr-5" outlined to="/dashboard"  @click="expand = !expand">Costs</v-btn>
+      <v-btn class="purple accent-4 mr-5" outlined to="/hello"  @click="expand = !expand">Hello</v-btn>
+    </v-app-bar>
+     
+      <v-main app class="purple lighten-4">
+       <v-expand-x-transition>  
+          <v-container class="" align-center v-show="expand">
+         <keep-alive>
+            <router-view></router-view>
+         </keep-alive>
+         </v-container>   </v-expand-x-transition>
+      </v-main>
+  
+  </v-app>
 </template>
 
 <script>
 export default {
   name: "App",
+  data() {
+     return {
+         expand: true,
+     }
+  }
 };
 </script>
 
 <style scoped>
-#app {
-  margin: 0 auto;
-  width: 500px;
-}
-.link-rout {
-  color: blue;
-  font-weight: 700;
-  font-size: 50px;
-  text-decoration: none;
-  cursor: pointer;
-}
-.link-rout:hover {
-  color: rgb(91, 91, 195);
-}
-.link-rout:active {
-  cursor: grabbing;
-}
-.links {
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  top:25px;
-  left: 25px;
-}
 </style>
