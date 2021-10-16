@@ -46,8 +46,8 @@ export default new Vuex.Store({
          let lastPagewithItems = state.paymentsLists[state.paymentsLists.length - 1]; // Крайний массив(страница) с объектами(строчками)
          let quantItemsOnTheLastPage = lastPagewithItems.length; // Длина крайнего массива
          if (payload.old) {
-            let IndexWithElem = state.paymentsLists[payload.page].findIndex(el => el.date == payload.old.date && el.category == payload.old.category && el.value == payload.old.value); // индекс соответсвия вводимых данных с теми, что надо отредактировать 
-            state.paymentsLists[payload.page].splice(IndexWithElem, 1, payload.info)// И переписываем данные 
+            let IndexWithElem = state.paymentsLists[payload.page-1].findIndex(el => el.date == payload.old.date && el.category == payload.old.category && el.value == payload.old.value); // индекс соответсвия вводимых данных с теми, что надо отредактировать 
+            state.paymentsLists[payload.page-1].splice(IndexWithElem, 1, payload.info)// И переписываем данные 
          }
          else {
             // let IndexWithElemNew
