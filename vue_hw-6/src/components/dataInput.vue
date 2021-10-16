@@ -25,7 +25,7 @@
     </div>
   </div>
 </template>
-
+ 
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
 export default {
@@ -90,9 +90,10 @@ export default {
           category: this.category,
           value: this.price,
         };
+        
         let payload = {
           info: info,
-          page: this.$route.params.page - 1,
+          page: this.$route.params.page-1,
           old: this.oldIndexWithEl,
         };
         this.$router

@@ -48,15 +48,16 @@ export default new Vuex.Store({
          if (payload.old) {
             let IndexWithElem = state.paymentsLists[payload.page].findIndex(el => el.date == payload.old.date && el.category == payload.old.category && el.value == payload.old.value); // индекс соответсвия вводимых данных с теми, что надо отредактировать 
             state.paymentsLists[payload.page].splice(IndexWithElem, 1, payload.info)// И переписываем данные 
-         } else {
-            let IndexWithElemNew
-            state.paymentsLists.forEach(i => {
-               IndexWithElemNew = i.findIndex(el => el.date == payload.info.date && el.category == payload.info.category && el.value == payload.info.value); // индекс соответсвия вводимых данных с новыми (-1 если совпадений нет и >= 0 - индекс совпадения)
-            })
-            if (IndexWithElemNew == -1) {
-               if (quantItemsOnTheLastPage < 3) { // Если меньше 3 элементов отображается на странице
-                  lastPagewithItems.push(payload.info)
-               }
+         }
+         else {
+            // let IndexWithElemNew
+            // state.paymentsLists.forEach(i => {
+            //    IndexWithElemNew = i.findIndex(el => el.date == payload.info.date && el.category == payload.info.category && el.value == payload.info.value); // индекс соответсвия вводимых данных с новыми (-1 если совпадений нет и >= 0 - индекс совпадения)
+            // })
+            //    if (IndexWithElemNew == -1) {
+            if (quantItemsOnTheLastPage < 3) { // Если меньше 3 элементов отображается на странице
+               lastPagewithItems.push(payload.info)
+               //}
             } else if (quantItemsOnTheLastPage == 3) {
                state.paymentsLists.push([payload.info]);
             }
