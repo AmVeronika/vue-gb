@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     ...mapMutations(["openBoolValue", "deletePaymentsListData",]),
-    editDataUser() {
+    editDataUser() {       
       this.$router.push({ name: "editDataPay", params: { component: this.settings.settings, url: this.$route.fullPath }});
       this.openBoolValue();
       this.$modal.hide();
