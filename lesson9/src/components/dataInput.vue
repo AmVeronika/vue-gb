@@ -16,7 +16,6 @@
         required
       >
       </v-text-field>
-
       <v-btn @click="clickSendData" class="brown lighten-1 pa-5 ml-2">отправить</v-btn>
     </div>
   </v-alert>
