@@ -8,7 +8,7 @@
         <v-btn class="purple accent-4 mr-5" outlined to="/hello">Hello</v-btn>
       </v-app-bar>
 
-    <v-main app class="purple lighten-4">
+    <v-main app class="purple lighten-4" max-width="88%">
       <v-expand-x-transition>
         <v-container align-center>
           <keep-alive>
