@@ -71,7 +71,7 @@ export default new Vuex.Store({
    },
    getters: {
       getInfoPage: state => state.paymentsLists, // Передача страницы для отображения
-
+      getCategoryList: state => state.categoryList
    },
    actions: {
       async fetchData({ commit }) {
