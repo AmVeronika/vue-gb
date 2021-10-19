@@ -32,10 +32,6 @@
         </v-row>
       </v-alert>
     </v-alert>
-    <div v-for="(m, mind) in getInfoPage" :key="mind">
-       
-       <p v-for="(l, lind) in m" :key="lind"> {{l.category}}</p>
-    </div>
   </v-container>
 </template>
 

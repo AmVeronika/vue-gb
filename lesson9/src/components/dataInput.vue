@@ -1,8 +1,14 @@
 <template>
   <v-alert outlined shaped class="amber lighten-3">
     <div class="d-flex justify-space-around align-center">
-      <v-text-field class="mr-2" v-model="date" type="date" required></v-text-field>
-      <v-select class="mr-2"
+      <v-text-field
+        class="mr-2"
+        v-model="date"
+        type="date"
+        required
+      ></v-text-field>
+      <v-select
+        class="mr-2"
         v-model="category"
         label="категории"
         name="category"
@@ -16,7 +22,9 @@
         required
       >
       </v-text-field>
-      <v-btn @click="clickSendData" class="brown lighten-1 pa-5 ml-2">отправить</v-btn>
+      <v-btn @click="clickSendData" class="brown lighten-1 pa-5 ml-2"
+        >отправить</v-btn
+      >
     </div>
   </v-alert>
 </template>
@@ -60,7 +68,7 @@ export default {
     ...mapActions(["fetchCategory"]),
     clickSendData() {
       //передача формы данных
-      if (this.category && this.price) {         
+      if (this.category && this.price) {
         if (!this.date) {
           //Если дата не указана, поставить текущий день
           const today = new Date();
@@ -80,20 +88,20 @@ export default {
 
         let lastPageCont = this.paymentsLists[this.paymentsLists.length - 1];
         let lastItemId = lastPageCont[lastPageCont.length - 1].id; // id предыдущего значения
-        
+
         let info = {
           id: lastItemId + 1,
           date: this.date,
           category: this.category,
           value: this.price,
-        }; 
-      
+        };
+
         let payload = {
           info: info,
           page: this.$route.params.page,
           old: this.oldIndexWithEl,
         };
-        
+
         this.$router;
         //  .push({ path: `/dashboard/${this.paymentsLists.length}` })
         //  .catch(() => {});
