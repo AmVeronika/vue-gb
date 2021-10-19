@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex justify-center" >
+  <v-container class="d-flex justify-center" >
     <v-btn
       :to="'/dashboard/' + (page + 1)"
       :class="{ active: activePage == page + 1 }"
@@ -8,7 +8,7 @@
     >
       {{ page + 1 }}
     </v-btn>
-  </div>
+  </v-container>
 </template>
 
 <script>

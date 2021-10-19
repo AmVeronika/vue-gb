@@ -47,7 +47,7 @@ export default {
       modalWindowId: null,
       settings: {}, //------ !!!!!!!!!!!-------------
       flagModalW: false,
-    };
+    }
   },
   components: {
     ModalWindow,

@@ -1,8 +1,8 @@
 <template>
-  <div class="paymentrevision">
+  <v-container class="paymentrevision">
     <v-btn class=" pr-2" :settings="settings" @click="editDataUser"> Edit </v-btn>
     <v-btn :settings="settings" @click="deleteDataUser"> Delete </v-btn>
-  </div>
+  </v-container>
 </template>
 
 <script>
